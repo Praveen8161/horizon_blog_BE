@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
           `;
 
     db.query(sqlQuery, (err, result) => {
-      if (err || !result[0])
+      if (err)
         return res
           .status(404)
           .json({ acknowledged: false, error: "Invalid Credentials" });
