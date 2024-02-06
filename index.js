@@ -14,9 +14,14 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { userBlogList } from "./Routers/userBlogList.js";
 import { deleteBlogRouter } from "./Routers/deleteSingleBlog.js";
+import { updateBlogRouter } from "./Routers/updateBlogRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+// Middle wares
+app.use(cors());
+app.use(express.json());
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -29,10 +34,6 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-// Middle wares
-app.use(cors());
-app.use(express.json());
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -54,6 +55,7 @@ app.use("/blog/create", upload.single("file"), createBlogRouter);
 app.use("/blog/single", singleBlogRouter);
 app.use("/user/blogs", userBlogList);
 app.use("/user/delete", deleteBlogRouter);
+app.use("/blog/update", upload.single("file"), updateBlogRouter);
 
 // Server Listen
 app.listen(PORT, () => {
