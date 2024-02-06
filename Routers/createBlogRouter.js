@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 
     // Get a user data
     db.query(getUserQuery, (err, result) => {
-      if (err)
+      if (err || !result[0])
         return res
           .status(404)
           .json({ acknowledged: false, error: "Error creating Post" });

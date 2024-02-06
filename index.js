@@ -10,6 +10,10 @@ import { CheckUserRouter } from "./Routers/checkUser.js";
 import { userProfileUpdateRouter } from "./Routers/userProfileUpdate.js";
 import { createBlogRouter } from "./Routers/createBlogRouter.js";
 import { singleBlogRouter } from "./Routers/singleBlog.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { userBlogList } from "./Routers/userBlogList.js";
+import { deleteBlogRouter } from "./Routers/deleteSingleBlog.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,9 +32,6 @@ const upload = multer({ storage });
 // Middle wares
 app.use(cors());
 app.use(express.json());
-
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,6 +52,8 @@ app.use("/checkuser", CheckUserRouter);
 app.use("/user/profile/update", userProfileUpdateRouter);
 app.use("/blog/create", upload.single("file"), createBlogRouter);
 app.use("/blog/single", singleBlogRouter);
+app.use("/user/blogs", userBlogList);
+app.use("/user/delete", deleteBlogRouter);
 
 // Server Listen
 app.listen(PORT, () => {

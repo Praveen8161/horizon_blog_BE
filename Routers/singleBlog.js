@@ -1,6 +1,5 @@
 import express from "express";
 import db from "../DataBase/db.js";
-import { emailAuthVerify } from "../Auth/auth.js";
 
 const router = express.Router();
 
@@ -19,14 +18,14 @@ router.get("/:id", async (req, res) => {
     `;
 
     db.query(sqlBlogGetQuery, (err, result) => {
-      if (err)
+      if (err || !result[0])
         return res.status(400).json({
           acknowledged: false,
           error: "Error getting Blog Post -- no blog found",
         });
 
       // Updating blog image URL
-      if (result[0].blog_image) {
+      if (result[0] && result[0].blog_image) {
         result[0].blog_image = result[0].blog_image.replace(/\\/g, "/");
       }
 
