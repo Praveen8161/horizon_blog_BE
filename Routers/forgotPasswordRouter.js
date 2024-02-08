@@ -1,7 +1,11 @@
 import express from "express";
+import dotenv from "dotenv";
 import db from "../DataBase/db.js";
+import nodemailer from "nodemailer";
 
 const router = express.Router();
+// Config Dotenv
+dotenv.config();
 
 router.post("/", async (req, res) => {
   try {
