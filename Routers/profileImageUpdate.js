@@ -6,8 +6,9 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { blog_title, blog_description, blog_content } = req.body;
-    if (!(blog_title && blog_description && blog_content))
+    const file = req.file;
+
+    if (file)
       return res
         .status(400)
         .json({ acknowledged: false, error: "Fields are required" });
@@ -18,20 +19,21 @@ router.post("/", async (req, res) => {
     )
       return res
         .status(400)
-        .json({ acknowledged: false, error: "Error updating user Profile" });
+        .json({ acknowledged: false, error: "Error updating Profile Image" });
+
     const { email } = emailAuthVerify(req.headers.authorization.split(" ")[1]);
 
     // Get user from MySQL
     const getUserQuery = `select * from users
-    where email = ?
-    `;
+      where email = ?
+      `;
 
     // Get a user data
     db.query(getUserQuery, email, (err, result) => {
       if (err || !result[0])
         return res
           .status(404)
-          .json({ acknowledged: false, error: "Error creating Post" });
+          .json({ acknowledged: false, error: "Error updating " });
 
       if (result) {
         const file = req.file;
@@ -54,8 +56,8 @@ router.post("/", async (req, res) => {
 
           // After Adding blog to MySQL getting the blog data
           const SQLGetBlog = `select * from blogposts
-          where blog_id = "${created.insertId}"
-          `;
+            where blog_id = "${created.insertId}"
+            `;
           db.query(SQLGetBlog, (err, result) => {
             if (err)
               return res
@@ -76,9 +78,9 @@ router.post("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log("Error in Create Blog");
+    console.log("Error in Profile Update Blog");
     console.log(err);
   }
 });
 
-export const createBlogRouter = router;
+export const profileImageRouter = router;

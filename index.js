@@ -15,6 +15,7 @@ import { dirname } from "path";
 import { userBlogList } from "./Routers/userBlogList.js";
 import { deleteBlogRouter } from "./Routers/deleteSingleBlog.js";
 import { updateBlogRouter } from "./Routers/updateBlogRouter.js";
+import { profileImageRouter } from "./Routers/profileImageUpdate.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// For Blog Images
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -34,6 +36,18 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+// For Images
+const storage2 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, "Image" + "-" + Date.now() + path.extname(file.originalname));
+  },
+});
+const upload2 = multer({ storage: storage2 });
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -56,6 +70,7 @@ app.use("/blog/single", singleBlogRouter);
 app.use("/user/blogs", userBlogList);
 app.use("/user/delete", deleteBlogRouter);
 app.use("/blog/update", upload.single("file"), updateBlogRouter);
+app.use("/user/profile-image", upload2.single("file"), profileImageRouter);
 
 // Server Listen
 app.listen(PORT, () => {
