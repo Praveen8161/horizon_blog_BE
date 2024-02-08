@@ -1,6 +1,6 @@
 import express from "express";
 import db from "../DataBase/db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 

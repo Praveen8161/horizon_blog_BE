@@ -40,7 +40,7 @@ const upload = multer({ storage });
 // For Images
 const storage2 = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "profile_image/");
   },
   filename: function (req, file, cb) {
     cb(null, "Image" + "-" + Date.now() + path.extname(file.originalname));
@@ -52,6 +52,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "profile_image")));
 
 // Db Connect
 db.connect((err) => {
