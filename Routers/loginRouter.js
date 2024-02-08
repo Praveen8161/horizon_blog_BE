@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
         `;
 
     db.query(sqlQuery, (err, result) => {
-      if (err)
+      if (err && !result[0])
         return res
           .status(404)
           .json({ acknowledged: false, error: "Invalid Credentials" });
@@ -34,6 +34,10 @@ router.post("/", async (req, res) => {
       delete user.password;
 
       user.token = emailAuthCreate(user.email);
+
+      if (result[0].profile_image) {
+        result[0].profile_image = result[0].profile_image.replace(/\\/g, "/");
+      }
 
       return res.status(201).json({ acknowledged: true, user });
     });

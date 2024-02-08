@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   try {
     const file = req.file;
 
-    if (file)
+    if (!file)
       return res
         .status(400)
         .json({ acknowledged: false, error: "Fields are required" });
@@ -30,21 +30,21 @@ router.post("/", async (req, res) => {
     `;
 
     db.query(userQuery, email, (err, result) => {
-      if (err || result[0])
+      if (err || !result[0])
         return res
           .status(400)
           .json({ acknowledged: false, error: "Error updating Profile Image" });
 
       const previosImagePath = result[0].profile_image;
 
-      const getUserQuery = `update users
-    set profile_image = ?
+      const updateImage = `update users
+      set profile_image = ?
       where email = ?
       `;
 
-      // Get a user data
-      db.query(getUserQuery, [file.path, email], (err, result) => {
-        if (err || !result[0])
+      // update the image
+      db.query(updateImage, [file.path || null, email], (err) => {
+        if (err)
           return res
             .status(404)
             .json({ acknowledged: false, error: "Error updating " });
@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
       if (previosImagePath) {
         unlink(previosImagePath, (err) => {
           if (err) {
-            console.log("error udeleting image file");
+            console.log("error deleting image file");
           }
         });
       }

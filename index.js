@@ -52,7 +52,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/uploads", express.static(path.join(__dirname, "profile_image")));
+app.use(
+  "/profile_image",
+  express.static(path.join(__dirname, "profile_image"))
+);
 
 // Db Connect
 db.connect((err) => {
