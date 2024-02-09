@@ -55,7 +55,10 @@ router.put("/", async (req, res) => {
         } else if (req.body.image_path) {
           // if the no new image uploaded but the Initial image path is sended to server
           image_path = req.body.image_path.split("/");
-          image_path = image_path[image_path.length - 1];
+          image_path = image_path.slice(
+            image_path.length - 2,
+            image_path.length
+          );
         }
 
         // Updating the new Blog details
