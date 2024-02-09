@@ -80,8 +80,6 @@ router.put("/", async (req, res) => {
               error: "Error updating Post -- blog update",
             });
 
-          console.log(updatedBlog);
-
           // After updating the Blog and if there is a new image updated or
           // if the Previous Image is removed from user
           // delete the previous image
@@ -114,8 +112,11 @@ router.put("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log("error in Update User Blog");
-    console.log(err);
+    // console.log("error in Update User Blog");
+    // console.log(err);
+    return res
+      .status(500)
+      .json({ acknowledged: false, error: "internal server error" });
   }
 });
 

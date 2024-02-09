@@ -76,8 +76,11 @@ router.post("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log("Error in Create Blog");
-    console.log(err);
+    // console.log("Error in Create Blog");
+    // console.log(err);
+    return res
+      .status(500)
+      .json({ acknowledged: false, error: "internal server error" });
   }
 });
 

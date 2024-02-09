@@ -34,8 +34,8 @@ router.post("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log(`Error at Login Router --- Error: ${err}`);
-    return res.status(500).json({ error: err.message });
+    // console.log(`Error at Forgot Router --- Error: ${err}`);
+    return res.status(500).json({ acknowledged: false, error: err.message });
   }
 });
 

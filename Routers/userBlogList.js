@@ -56,8 +56,11 @@ router.get("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log("error in User Blog Post");
-    console.log(err);
+    // console.log("error in User Blog Post");
+    // console.log(err);
+    return res
+      .status(500)
+      .json({ acknowledged: false, error: "internal server error" });
   }
 });
 

@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
         `;
 
     db.query(sqlQuery, (err, result) => {
-      if (err && !result[0])
+      if (err || !result[0])
         return res
           .status(404)
           .json({ acknowledged: false, error: "Invalid Credentials" });
@@ -44,8 +44,8 @@ router.post("/", async (req, res) => {
 
     //
   } catch (err) {
-    console.log(`Error at Login Router --- Error: ${err}`);
-    return res.status(500).json({ error: err.message });
+    // console.log(`Error at Login Router --- Error: ${err}`);
+    return res.status(500).json({ acknowledged: false, error: err.message });
   }
 });
 

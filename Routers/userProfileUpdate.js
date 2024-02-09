@@ -42,8 +42,10 @@ router.post("/", async (req, res) => {
     });
     //
   } catch (err) {
-    console.log(`Error at User Profile Update Route --- Error: ${err}`);
-    return res.status(500).json({ error: err.message });
+    // console.log(`Error at User Profile Update Route --- Error: ${err}`);
+    return res
+      .status(500)
+      .json({ acknowledged: false, error: "internal server error" });
   }
 });
 

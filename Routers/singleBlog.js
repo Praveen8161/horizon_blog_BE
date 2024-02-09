@@ -34,8 +34,11 @@ router.get("/:id", async (req, res) => {
 
     //
   } catch (err) {
-    console.log("error in Single Blog Post");
-    console.log(err);
+    // console.log("error in Single Blog Post");
+    // console.log(err);
+    return res
+      .status(500)
+      .json({ acknowledged: false, error: "internal server error" });
   }
 });
 

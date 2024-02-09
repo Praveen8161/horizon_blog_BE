@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
     });
     //
   } catch (err) {
-    console.log(`Error at Check User Router --- Error: ${err}`);
+    // console.log(`Error at Check User Router --- Error: ${err}`);
     return res.status(500).json({ error: err.message });
   }
 });
