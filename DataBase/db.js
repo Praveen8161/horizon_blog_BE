@@ -11,12 +11,20 @@ dotenv.config();
 //   database: "horizon",
 // });
 
+// const db = mysql.createConnection({
+//   host: process.env.HOST,
+//   port: "3306",
+//   user: process.env.USER,
+//   password: process.env.PASSWORD,
+//   database: process.env.DATABASE,
+// });
+
 const db = mysql.createConnection({
-  host: process.env.HOST,
+  host: process.env.FHOST,
   port: "3306",
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  user: process.env.FUSER,
+  password: process.env.FPASSWORD,
+  database: process.env.FDATABASE,
 });
 
 export default db;
